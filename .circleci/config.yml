@@ -14,7 +14,8 @@ references:
   restore_gradle_cache: &restore_gradle_cache
     restore_cache:
       key: *gradle_cache_key
-
+  accept_android_sdk_licence: &accept_android_sdk_licence
+    run: yes | /opt/android/sdk/tools/bin/sdkmanager --licenses || exit 0
 
 jobs:
   build:
