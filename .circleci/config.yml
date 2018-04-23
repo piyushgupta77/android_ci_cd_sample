@@ -1,57 +1,21 @@
+#
+# Build configuration for Circle CI
+#
 
-version: 2
+general:
+    artifacts:
+        - /home/ubuntu/android-sample/app/build/outputs/apk/
 
-references:
-  gradle_options: &gradle_options
-    '-Dorg.gradle.jvmargs="-Xmx2560M -XX:+HeapDumpOnOutOfMemoryError"'
-  gradle_cache_key: &gradle_cache_key
-    jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-  save_gradle_cache: &save_gradle_cache
-    save_cache:
-      paths:
-        - ~/.gradle
-      key: *gradle_cache_key
-  restore_gradle_cache: &restore_gradle_cache
-    restore_cache:
-      key: *gradle_cache_key
-  accept_android_sdk_licence: &accept_android_sdk_licence
-    run: yes | /opt/android/sdk/tools/bin/sdkmanager --licenses || exit 0
-
-jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/android:api-26-alpha
-      
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
-
+machine:
     environment:
-      GRADLE_OPTS: *gradle_options
-      ANDROID_HOME: /usr/local/android-sdk-linux
+        ANDROID_HOME: /usr/local/android-sdk-linux
 
-    steps:
-      - checkout
+dependencies:
+    override:
+        - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-27.0.3,android-26,extra-google-m2repository,extra-google-google_play_services,extra-android-support
+        - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "build.gradle" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: gradle dependencies
-
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: v1-dependencies-{{ checksum "build.gradle" }}
-        
-      # run tests!
-      - run: gradle test
-
-
+test:
+    override:
+        - (./gradlew assemble):
+            timeout: 360
