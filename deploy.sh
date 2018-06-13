@@ -1,6 +1,6 @@
 
-$AndroidAppId=${1:-3625d932a8864fcbb70d90e27c9e373f}
-HockeyAppToken=8bcc6c28760b411aae652638cae2e274
+$AndroidAppId=${1:-8bcc6c28760b411aae652638cae2e274}
+HockeyAppToken=8d419555305146d99f4ff38f3e122572
 
 curl \
 -w 'running curl script'
