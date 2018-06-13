@@ -29,12 +29,13 @@ jobs:
       - store_artifacts:
           path: app/build/reports
           destination: reports
-          command:rename *.apk efica.apk
       - store_artifacts:
           path: app/build/outputs
           destination: apk
       - store_test_results:
           path: app/build/test-results
+      - run:
+          command:rename *.apk efica.apk
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
 deployment:
   develop:
