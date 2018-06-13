@@ -35,7 +35,8 @@ jobs:
       - store_test_results:
           path: app/build/test-results
       - run:
-          command: ren *.apk efica.apk
+          command: |
+          ren *.apk efica.apk
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
 deployment:
   develop:
