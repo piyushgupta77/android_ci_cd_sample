@@ -20,9 +20,9 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Run Tests
-          command: ./gradlew lint test
+#      - run:
+#          name: Run Tests
+#          command: ./gradlew lint test
       - run:
           name: Build Code
           command: ./gradlew assembleDebug
@@ -37,7 +37,15 @@ jobs:
       - run:
           command: mv ./app/build/outputs/apk/debug/app-debug.apk ./app/build/outputs/apk/debug/efica.apk;
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
-deployment:
-  name: Deploying...
-  commands:
-    - ./deploy.sh
+  deploy:
+    master:
+      name: Deploying...
+      branch: master
+      commands:
+        - ./deploy.sh
+#deployment:
+#  master:
+#    name: Deploying...
+#    branch: master
+#    commands:
+#      - ./deploy.sh
