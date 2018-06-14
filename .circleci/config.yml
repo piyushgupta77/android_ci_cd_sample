@@ -37,12 +37,22 @@ jobs:
       - run:
           command: mv ./app/build/outputs/apk/debug/app-debug.apk ./app/build/outputs/apk/debug/efica.apk;
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
-  deploy:
-    master:
-      name: Deploying...
-      branch: master
-      commands:
-        - ./deploy.sh
+  docker:
+    - image: circleci/node:latest
+  steps:
+    - checkout
+#    - *attach_workspace_artifacts
+#      storing to be visible on api as an outcome of the last build
+#      - *save_workspace_artifacts
+    - deploy:
+        name: Deploy QA version to Hockey
+        command: ./deploy.sh
+#  deploy:
+#    master:
+#      name: Deploying...
+#      branch: master
+#      commands:
+#        - ./deploy.sh
 #deployment:
 #  master:
 #    name: Deploying...
