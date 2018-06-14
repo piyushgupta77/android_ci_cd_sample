@@ -40,7 +40,15 @@ jobs:
 deployment:
   hockey:
     branch: master
-#    name: Deploying...
+    name: Deploying...
 #    branch: master
     commands:
       - ./deploy.sh
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
