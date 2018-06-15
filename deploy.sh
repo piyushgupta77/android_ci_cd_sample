@@ -1,5 +1,5 @@
+
 curl \
--w 'running curl script'
 -F "status=2" \
 -F "notify=1" \
 -F "ipa=@${2:-app/build/outputs/apk/app-debug.apk}" \
