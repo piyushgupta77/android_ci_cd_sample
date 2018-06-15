@@ -1,4 +1,12 @@
 version: 2
+references:
+  attach_workspace_artifacts: &attach_workspace_artifacts
+    attach_workspace:
+      at: outputs
+  save_artifacts: &save_artifacts
+    store_artifacts:
+      path: app/build/outputs
+      destination: apk
 jobs:
   build:
     working_directory: ~/code
@@ -42,6 +50,9 @@ jobs:
       - image: circleci/node:latest
     steps:
       - checkout
+      - *attach_workspace_artifacts
+      # storing to be visible on api as an outcome of the last build
+      - *save_workspace_artifacts
       - run:
           name: Deploy to hockey app
           command: sh ./deploy.sh
