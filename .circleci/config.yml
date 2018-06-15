@@ -37,10 +37,19 @@ jobs:
       - run:
           command: mv ./app/build/outputs/apk/debug/app-debug.apk ./app/build/outputs/apk/debug/efica.apk;
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
-deployment:
-  hockey:
-    branch: master
-    name: Deploying...
-#    branch: master
-    commands:
-      - ./deploy.sh
+  deploy:
+    steps:
+      - checkout
+      - run:
+          name: Deploy to hockey app
+          command: ./deploy.sh
+#Block 2
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+            filters:
+              branches:
+                only: master
