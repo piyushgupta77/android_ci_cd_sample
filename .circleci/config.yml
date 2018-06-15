@@ -1,5 +1,8 @@
 version: 2
 references:
+  save_workspace_artifacts: &save_workspace_artifacts
+    store_artifacts:
+      path: outputs/outputs/apk
   attach_workspace_artifacts: &attach_workspace_artifacts
     attach_workspace:
       at: outputs
