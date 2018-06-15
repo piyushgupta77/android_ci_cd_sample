@@ -43,15 +43,3 @@ jobs:
       - run:
           name: Deploy to hockey app
           command: ./deploy.sh
-
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-            only: master
