@@ -1,7 +1,3 @@
-
-$AndroidAppId=8bcc6c28760b411aae652638cae2e274
-HockeyAppToken=8d419555305146d99f4ff38f3e122572
-
 curl \
 -w 'running curl script'
 -F "status=2" \
