@@ -1,6 +1,6 @@
 
 curl \
-if ( curl -o/dev/null -sfI "app/build/outputs/apk/debug/app-debug.apk" ); then
+if [ -e "app/build/outputs/apk/debug/app-debug.apk"]; then
   echo "URL exists"
 else
   echo "URL does not exist"
