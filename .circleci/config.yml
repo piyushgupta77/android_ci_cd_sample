@@ -47,7 +47,7 @@ jobs:
       - checkout
       - run:
           name: Deploy to hockey app
-          command: ./deploy.sh
+          command: sh ./deploy.sh
 #Block 2
 workflows:
   version: 2
