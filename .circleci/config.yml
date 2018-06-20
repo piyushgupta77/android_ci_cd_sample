@@ -6,10 +6,6 @@ references:
   attach_workspace_artifacts: &attach_workspace_artifacts
     attach_workspace:
       at: outputs
-  save_artifacts: &save_artifacts
-    store_artifacts:
-      path: app/build/outputs
-      destination: apk
 jobs:
   build:
     working_directory: ~/code
@@ -47,13 +43,8 @@ jobs:
           root: app/build
           paths:
             - outputs
-
 #      - store_test_results:
 #          path: app/build/test-results
-      - run:
-          command: mv ./app/build/outputs/apk/debug/app-debug.apk ./app/build/outputs/apk/debug/efica.apk;
-      - run:
-          command: mv /home/circleci/project/outputs/outputs/apk/debug/app-debug.apk /home/circleci/project/outputs/outputs/apk/debug/efica.apk 
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
       
   deploy:
