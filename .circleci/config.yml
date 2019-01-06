@@ -1,4 +1,11 @@
 version: 2
+references:
+  save_workspace_artifacts: &save_workspace_artifacts
+    store_artifacts:
+      path: outputs/outputs/apk
+  attach_workspace_artifacts: &attach_workspace_artifacts
+    attach_workspace:
+      at: outputs
 jobs:
   build:
     working_directory: ~/code
@@ -20,9 +27,9 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Run Tests
-          command: ./gradlew lint test
+#      - run:
+#          name: Run Tests
+#          command: ./gradlew lint test
       - run:
           name: Build Code
           command: ./gradlew assembleDebug
@@ -32,11 +39,42 @@ jobs:
       - store_artifacts:
           path: app/build/outputs
           destination: apk
-      - store_test_results:
-          path: app/build/test-results
+      - persist_to_workspace:
+          root: app/build
+          paths:
+            - outputs
+#      - run:
+#          command: mv /home/circleci/project/outputs/outputs/apk/debug/app-debug.apk /home/circleci/project/outputs/outputs/apk/debug/new_name.apk 
+      - run:
+          name: current dir
+          command: pwd;
+      - run:
+          name: moving files
+          command: mv ./app/build/outputs/apk/debug/app-debug.apk /home/circleci/project/outputs/outputs/apk/debug/new_name.apk;          
+#      - store_test_results:
+#          path: app/build/test-results
       # See https://circleci.com/docs/2.0/deployment-integrations/ for deploy examples
-deployment:
-  develop:
-    branch: master
-    commands:
-      - ./deploy.sh
+      
+  deploy:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - *attach_workspace_artifacts
+      # storing to be visible on api as an outcome of the last build
+      - *save_workspace_artifacts
+      - run:
+          name: Deploy to hockey app
+          command: sh ./deploy.sh
+#Block 2
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

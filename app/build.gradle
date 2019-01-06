@@ -6,11 +6,11 @@ android {
     defaultConfig {
         applicationId "sample.example.com.sampleproject"
         minSdkVersion 17
-        targetSdkVersion 26
+        targetSdkVersion 26 
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        manifestPlaceholders = [HOCKEYAPP_APP_ID: "3625d932a8864fcbb70d90e27c9e373f"]
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "8bcc6c28760b411aae652638cae2e274"]
     }
     buildTypes {
         release {
