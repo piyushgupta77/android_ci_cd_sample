@@ -1,0 +1,1 @@
+This project uses CircleCi for CI and app center(previously hockeyapp) for CD
