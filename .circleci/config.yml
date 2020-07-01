@@ -21,7 +21,7 @@ jobs:
           command: sudo npm install appcenter-cli -g
       - run:
           name: Login
-          command: appcenter login --token d7ac3b351fe5840b064ba379ff3c9e1b6d511b23
+          command: appcenter login --token 8c9e09a05861982fec691ee04556e4c9bb391f94
       - save_cache:
           paths:
             - ~/.gradle
