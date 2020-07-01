@@ -72,7 +72,6 @@ jobs:
       # storing to be visible on api as an outcome of the last build
       - *save_workspace_artifacts
       - run:
-<<<<<<< HEAD
         name: Deliver to appcenter
         command: appcenter distribute release --debug --app piyushgupta77/android_ci_cd_sample --file app/build/outputs/apk/debug/app-debug.apk --group "App Testers"
 
