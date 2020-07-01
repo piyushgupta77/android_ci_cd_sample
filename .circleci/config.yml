@@ -13,7 +13,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-25-alpha
+      - image: circleci/android:api-29-node
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -34,6 +34,12 @@ jobs:
 #      - run:
 #          name: Run Tests
 #          command: ./gradlew lint test
+      - run:
+          name: Download appcenter
+          command: sudo npm install appcenter-cli -g
+      - run:
+          name: Login
+          command: appcenter login --token d7ac3b351fe5840b064ba379ff3c9e1b6d511b23
       - run:
           name: Build Code
           command: ./gradlew assembleDebug
@@ -63,18 +69,9 @@ jobs:
       - *attach_workspace_artifacts
       # storing to be visible on api as an outcome of the last build
       - *save_workspace_artifacts
-#      - run:
-#          name: Deploy to hockey app
-#          command: sh ./deploy.sh
-      - run:
-        name: Download appcenter
-        command: sudo npm install appcenter-cli -g
-      - run:
-        name: Login
-        command: appcenter login --token d7ac3b351fe5840b064ba379ff3c9e1b6d511b23
       - run:
         name: Deliver to appcenter
-        command: appcenter distribute release --debug --app piyushgupta77@gmail.com/android_ci_cd_sample --file app/build/outputs/apk/debug/app-debug.apk --group "App Testers"
+        command: appcenter distribute release --debug --app piyushgupta77/android_ci_cd_sample --file app/build/outputs/apk/debug/app-debug.apk --group "App Testers"
 
 #Block 2
 workflows:
